@@ -1,4 +1,8 @@
-﻿@model List<Produto>;
+﻿@{
+    ViewData["Title"] = "Carrossel";
+}
+
+@model List<Produto>;
 <h3>Catálogo</h3>
 
 <div id="my-carousel" class="carousel slide" data-ride="carousel">
@@ -32,7 +36,10 @@
                                     <div class="produto-nome">@item.Nome</div>
                                     <div><h4><strong>@item.Preco</strong></h4></div>
                                     <div class="text-center">
-                                        <a href="/" class="btn btn-success">Adicionar</a>
+                                        <a asp-controller="pedido"
+                                           asp-action="carrinho"
+                                           asp-route-codigo="@item.Codigo"
+                                           class="btn btn-success">Adicionar</a>
                                     </div>
                                 </div>
                             </div>

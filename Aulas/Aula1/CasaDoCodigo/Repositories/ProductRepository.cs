@@ -6,13 +6,15 @@ using System.Linq;
 
 namespace CasaDoCodigo.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : BaseRepository<Produto>, IProductRepository
     {
-        private readonly ApplicationContext context;
-
-        public ProductRepository(ApplicationContext context)
+        public ProductRepository(ApplicationContext context) : base(context)
         {
-            this.context = context;
+        }
+
+        public IList<Produto> GetProducts()
+        {
+            return dbSet.ToList();
         }
 
         public IList<Produto> GetAll()
@@ -24,7 +26,9 @@ namespace CasaDoCodigo.Repositories
         {
             foreach (var book in books)
             {
-                context.Set<Produto>().Add(new Produto(book.Codigo, book.Nome, book.Preco));
+                if(!dbSet.Where(p => p.Codigo== book.Codigo).Any()) {
+                    dbSet.Add(new Produto(book.Codigo, book.Nome, book.Preco));
+                }
             }
             context.SaveChanges();
         }
