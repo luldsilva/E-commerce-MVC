@@ -25,7 +25,11 @@ namespace CasaDoCodigo
         {
             services.AddMvc();
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            services.AddSession(option =>
+            {
+                option.IdleTimeout= TimeSpan.FromSeconds(1200);
+                option.Cookie.HttpOnly= true;
+            });
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IDataService, DataService>();
@@ -50,6 +54,7 @@ namespace CasaDoCodigo
 
             app.UseStaticFiles();
 
+            app.UseCookiePolicy();
             app.UseSession();
 
             app.UseMvc(routes =>
