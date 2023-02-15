@@ -37,6 +37,7 @@ namespace CasaDoCodigo.Repositories
                 itemPedido = new ItemPedido(pedido, produto, 1, produto.Preco);
                 context.Set<ItemPedido>()
                     .Add(itemPedido);
+                context.SaveChanges();
             }
         }
 

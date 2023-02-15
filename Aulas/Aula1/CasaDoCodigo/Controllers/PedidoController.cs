@@ -37,7 +37,8 @@ namespace CasaDoCodigo.Controllers
 
         public IActionResult Resumo()
         {
-            return View();
+            Pedido pedido = _pedidoRepository.GetPedido();
+            return View(pedido);
         }
     }
 }
